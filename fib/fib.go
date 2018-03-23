@@ -35,15 +35,10 @@ func (s *FibState) Next() int {
 func ExhaustiveNextFib(n0 int, limit int) (n1 int, err error) {
 	// find the next fibonacci number, while ensuring n0 is a fibonacci number
 	fibState := NewFibState()
-	for {
+	for i := 0; limit < 0 || i < limit; i++ {
 
 		// get the next fibonacci number in the sequence
 		next := fibState.Next()
-
-		if limit > 0 && next > limit {
-			err = fmt.Errorf("Fibonacci number %d exceeded upper limit %d", next, limit)
-			return
-		}
 
 		// verify that the caller's number still might be a fibonacci number
 		if next > n0 {
@@ -59,4 +54,7 @@ func ExhaustiveNextFib(n0 int, limit int) (n1 int, err error) {
 		}
 
 	}
+
+	err = fmt.Errorf("Exceeded iteration limit %d", limit)
+	return
 }
