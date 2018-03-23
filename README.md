@@ -20,13 +20,13 @@ gofib-server
 ## Manual testing
 ```bash
 # should print 3
-curl -d 2 localhost:8080/fib/
+curl localhost:8080/fib/?n=2
 
 # should print 5
-curl -d 3 localhost:8080/fib/
+curl localhost:8080/fib/?n=3
 
 # should print an error indicating that 4 is not a fibonacci number
-curl -d 4 localhost:8080/fib/
+curl localhost:8080/fib/?n=4
 ```
 
 ## Overriding the local resource path and hostname

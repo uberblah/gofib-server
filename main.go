@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -36,17 +35,17 @@ func main() {
 
 	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 
-		// read the request into a string
-		bodyStr, err := ioutil.ReadAll(r.Body)
-		if err != nil {
-			Errorf(w, http.StatusBadRequest, "Failed to read the body of your request, err='%s'")
+		// read the request query into a string
+		nStr := r.URL.Query().Get("n")
+		if nStr == "" {
+			Errorf(w, http.StatusBadRequest, "Parameter 'n=<>' in the query string must specify your number")
 			return
 		}
 
 		// get the user's initial integer
-		n0, err := strconv.Atoi(string(bodyStr))
+		n0, err := strconv.Atoi(string(nStr))
 		if err != nil {
-			Errorf(w, http.StatusBadRequest, "Could not parse '%s' as an integer, err='%s'", bodyStr, err)
+			Errorf(w, http.StatusBadRequest, "Could not parse '%s' as an integer, err='%s'", nStr, err)
 			return
 		}
 
