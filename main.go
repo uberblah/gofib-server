@@ -11,7 +11,13 @@ import (
 	"github.com/uberblah/gofib-server/fib"
 )
 
-const EnvAddr = "GOFIB_ADDR"
+const (
+	EnvAddr     = "GOFIB_ADDR"
+	DefaultAddr = "127.0.0.1:8080"
+
+	EnvPath     = "GOFIB_PATH"
+	DefaultPath = "/fib/"
+)
 
 func Errorf(w http.ResponseWriter, status int, format string, args ...interface{}) {
 	http.Error(w, fmt.Sprintf(format, args...), status)
@@ -20,10 +26,15 @@ func Errorf(w http.ResponseWriter, status int, format string, args ...interface{
 func main() {
 	addr := os.Getenv(EnvAddr)
 	if addr == "" {
-		log.Fatalf("Env variable %s must be set, like '127.0.0.1:8080'", EnvAddr)
+		addr = DefaultAddr
 	}
 
-	http.HandleFunc("/fib/", func(w http.ResponseWriter, r *http.Request) {
+	path := os.Getenv(EnvPath)
+	if path == "" {
+		path = DefaultPath
+	}
+
+	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 
 		// read the request into a string
 		bodyStr, err := ioutil.ReadAll(r.Body)
