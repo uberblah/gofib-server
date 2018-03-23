@@ -1,12 +1,20 @@
 # gofib-server
 A simple HTTP server which, given one fibonacci number, produces the next
 
-## Executing Locally
+## Prerequisites
+- latest go version
+- `${GOPATH}/bin` must be in your `$PATH`
 
-The following will serve over HTTP on localhost:8080/fib/.
+## Installation
+The following will install gofib-server in `${GOPATH}/bin`
 ```bash
-go build
-./gofib-server
+go install github.com/uberblah/gofib-server
+```
+
+## Running
+The following will serve over HTTP on `localhost:8080/fib/`
+```bash
+gofib-server
 ```
 
 ## Manual testing
